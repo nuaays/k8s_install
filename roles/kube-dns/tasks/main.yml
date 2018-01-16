@@ -1,0 +1,16 @@
+---
+
+- name: copy kubedns.yml
+  template: src=kubedns.yml.j2 dest=/tmp/kubedns.yml
+  when: NODE_ID is defined and NODE_ID == "node1"
+
+- name: deploy kubedns.yml
+  shell: "sudo {{ bin_dir }}/kubectl apply -f /tmp/kubedns.yml && sleep 15"
+  when: NODE_ID is defined and NODE_ID == "node1"
+  ignore_errors: true
+
+- name: check kubedns
+  shell: "sudo {{ bin_dir }}/kubectl get all -n kube-system -o wide"
+  when: NODE_ID is defined and NODE_ID == "node1"
+  ignore_errors: true
+

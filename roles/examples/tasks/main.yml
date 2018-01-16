@@ -1,0 +1,71 @@
+---
+
+- name: create /tmp/nginxcluster.yml
+  copy:
+    content: |
+      apiVersion: v1
+      kind: ReplicationController
+      metadata:
+        name: nginxcluster
+        namespace: default
+      spec:
+        replicas: 3
+        selector:
+          app: nginxcluster
+        template:
+          metadata:
+            name: nginxcluster
+            labels:
+              app: nginxcluster
+          spec:
+            containers:
+            - name: nginxcluster
+              image: russmckendrick/cluster
+              imagePullPolicy: IfNotPresent
+              ports:
+              - containerPort: 80
+              env:
+              - name: TZ
+                value: Asia/Shanghai
+              - name: spring.rabbitmq.host
+                value: 10.12.0.142
+              - name: spring.rabbitmq.password
+                value: proteus
+              - name: spring.rabbitmq.username
+                value: proteus
+              - name: dubbo.registry
+                value: zookeeper://10.12.0.141:2181?backup=10.12.0.142:2181,10.12.0.143:2181
+              - name: JACOCO
+                value: -javaagent:/opt/fincloud/proteus/agent-runtime.jar=output=tcpserver,address=*
+
+      ---
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: nginxcluster
+        namespace: default
+      spec:
+        type: NodePort
+        ports:
+          - port: 80
+            targetPort: 80
+            protocol: TCP
+        selector:
+          app: nginxcluster
+    dest: /tmp/nginxcluster.yml
+
+
+- name: deploy /tmp/nginxcluster.yml
+  shell: "{{ bin_dir}}/kubectl apply -f /tmp/nginxcluster.yml"
+
+- name: check nginxcluster
+  shell: "{{ bin_dir}}/kubectl get all -o wide"
+
+- name: scale nginxcluster to 5
+  shell: "{{ bin_dir}}/kubectl scale rc nginxcluster --replicas=5"
+
+
+
+
+
+
