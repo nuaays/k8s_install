@@ -1,5 +1,5 @@
 - name: 下载etcd二进制文件
-  copy: src={{ base_dir }}/bin/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
+  copy: src={{ base_dir }}/bin/etcd/{{ etcd_version }}/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
   with_items:
   - etcd
   - etcdctl
@@ -24,4 +24,12 @@
   template: src=etcd.service.j2 dest=/etc/systemd/system/etcd.service
 
 - name: 开启etcd服务
-  shell: systemctl daemon-reload && systemctl enable etcd && systemctl restart etcd
+  shell: sudo systemctl daemon-reload && sudo systemctl enable etcd && sudo systemctl restart etcd
+
+- name: check etcd cluster health
+  shell: sudo {{ bin_dir }}/etcdctl --ca-file={{ ca_dir }}/ca.pem --cert-file=/etc/etcd/ssl/etcd.pem --key-file=/etc/etcd/ssl/etcd-key.pem --endpoints={{ ETCD_ENDPOINTS }} cluster-health
+  #shell: etcdctl --ca-file=/etc/kubernetes/ssl/ca.pem --cert-file=/etc/etcd/ssl/etcd.pem --key-file=/etc/etcd/ssl/etcd-key.pem --endpoints=https://192.168.56.101:2379,https://192.168.56.102:2379,https://192.168.56.103:2379 cluster-health
+
+- name: check etcd member list
+  shell: sudo {{ bin_dir }}/etcdctl --ca-file={{ ca_dir }}/ca.pem --cert-file=/etc/etcd/ssl/etcd.pem --key-file=/etc/etcd/ssl/etcd-key.pem --endpoints={{ ETCD_ENDPOINTS }} member list
+

@@ -1,5 +1,5 @@
 - name: 下载 kube-master 二进制
-  copy: src={{ base_dir }}/bin/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
+  copy: src={{ base_dir }}/bin/v{{ k8s_version }}/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
   with_items:
   - kube-apiserver
   - kube-controller-manager
@@ -7,6 +7,7 @@
   - kubectl
   - kube-proxy
   - kubelet
+  - hyperkube
 
 - name: 创建 kubernetes 证书签名请求
   template: src=kubernetes-csr.json.j2 dest={{ ca_dir }}/kubernetes-csr.json

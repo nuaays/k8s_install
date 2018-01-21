@@ -6,15 +6,23 @@
   - /var/lib/kube-proxy
   - /etc/cni/net.d
 
-- name: 下载 kubelet,kube-proxy 二进制和基础 cni plugins
-  copy: src={{ base_dir }}/bin/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
+- name: 下载 基础 cni plugins
+  copy: src={{ base_dir }}/bin/cni/v{{cni_version}}/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
   with_items:
-  - kubelet
-  - kube-proxy
-  - bridge
-  - host-local
-  - loopback
-  
+    - bridge
+    - host-local
+    - loopback
+    - macvlan
+    - dhcp
+    - tuning
+
+- name: 下载 kubelet,kube-proxy 二进制
+  copy: src={{ base_dir }}/bin/v{{ k8s_version }}/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
+  with_items:
+    - kubelet
+    - kube-proxy
+
+
 ##----------kubelet 配置部分--------------
 # kubelet 启动时向 kube-apiserver 发送 TLS bootstrapping 请求，需要绑定该角色
 # 只需单节点执行一次，重复执行的报错可以忽略
@@ -41,6 +49,7 @@
 	--cluster=kubernetes \
 	--user=kubelet-bootstrap \
 	--kubeconfig=/tmp/bootstrap.kubeconfig"
+
 - name: 选择默认上下文
   shell: "{{ bin_dir }}/kubectl config use-context default --kubeconfig=/tmp/bootstrap.kubeconfig"
 

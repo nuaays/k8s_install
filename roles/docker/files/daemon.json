@@ -1,4 +1,13 @@
 {
-  "registry-mirrors": ["https://registry.docker-cn.com"], 
+  "hosts": [
+    "tcp://0.0.0.0:2375",
+    "unix:///var/run/docker.sock"
+  ],
+  "registry-mirrors": [
+    "http://f631e5c5.m.daocloud.io",
+    "https://registry.docker-cn.com",
+    "https://olzwzeg2.mirror.aliyuncs.com",
+    "https://ip2y4bft.mirror.aliyuncs.com"
+  ],
   "max-concurrent-downloads": 6
 }

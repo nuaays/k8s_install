@@ -1,0 +1,20 @@
+---
+
+- include_vars:
+    dir: ../vars
+
+- name: docker pull basic images (pause-amd64 and kube-proxy-amd64)
+  shell: "{{ bin_dir }}/docker pull {{ item.value.name }}; {{ bin_dir }}/docker tag {{ item.value.name }} {{ item.value.target }}; {{ bin_dir }}/docker rmi {{ item.value.name }};"
+  with_dict: "{{basic_images}}"
+
+- name: docker pull calico images
+  shell: "{{ bin_dir }}/docker pull {{ item.value.name }}; {{ bin_dir }}/docker tag {{ item.value.name }} {{ item.value.target }}; {{ bin_dir }}/docker rmi {{ item.value.name }};"
+  with_dict: "{{calico_images[calico_version]}}"
+
+- name: docker pull dns images
+  shell: "{{ bin_dir }}/docker pull {{ item.value.name }}; {{ bin_dir }}/docker tag {{ item.value.name }} {{ item.value.target }}; {{ bin_dir }}/docker rmi {{ item.value.name }};"
+  with_dict: "{{dns_images[k8s_dns_version]}}"
+
+# - name: docker pull k8s images
+#   shell: "{{ bin_dir }}/docker pull {{ item.value.name }}; {{ bin_dir }}/docker tag {{ item.value.name }} {{ item.value.target }}; {{ bin_dir }}/docker rmi {{ item.value.name }};"
+#   with_dict: "{{ k8s_images[k8s_version] }}"

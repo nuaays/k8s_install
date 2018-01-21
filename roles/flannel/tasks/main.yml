@@ -5,7 +5,7 @@
   - /root/local/kube-system/flannel
 
 - name: 下载flannel cni plugins
-  copy: src={{ base_dir }}/bin/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
+  copy: src={{ base_dir }}/bin/cni/v{{cni_version}}/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
   with_items:
   - bridge
   - flannel

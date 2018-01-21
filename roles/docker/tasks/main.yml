@@ -1,6 +1,6 @@
 ## ---------docker daemon配置部分-----------
 - name: 下载 docker 二进制文件
-  copy: src={{ base_dir }}/bin/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
+  copy: src={{ base_dir }}/bin/docker/{{ docker_version }}/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
   with_items:
   - docker-containerd
   - docker-containerd-shim
@@ -36,17 +36,17 @@
   setup: gather_subset=min
   tags: docker-tag
 
-- name: apt安装轻量JSON处理程序
-  apt: name=jq state=latest
-  when: ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "16"
-  ignore_errors: true
-  tags: docker-tag
+# - name: apt安装轻量JSON处理程序
+#   apt: name=jq state=latest
+#   when: ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "16"
+#   ignore_errors: true
+#   tags: docker-tag
 
-- name: yum安装轻量JSON处理程序
-  yum: name=jq state=latest
-  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "7"
-  ignore_errors: true
-  tags: docker-tag
+# - name: yum安装轻量JSON处理程序
+#   yum: name=jq state=latest
+#   when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "7"
+#   ignore_errors: true
+#   tags: docker-tag
 
 - name: 下载 docker-tag
   copy: src=docker-tag dest={{ bin_dir }}/docker-tag mode=0755

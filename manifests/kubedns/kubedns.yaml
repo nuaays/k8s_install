@@ -80,6 +80,7 @@ spec:
       containers:
       - name: kubedns
         #image: gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.5
+	#image: mirrorgooglecontainers/k8s-dns-kube-dns-amd64:1.14.5
         image: nuaays/k8s-dns-kube-dns-amd64:1.14.7
         resources:
           # TODO: Set memory limits when we've profiled the container for large
@@ -110,7 +111,7 @@ spec:
           initialDelaySeconds: 3
           timeoutSeconds: 5
         args:
-        - --domain=cluster.local
+        - --domain=cluster.local.
         - --dns-port=10053
         - --config-dir=/kube-dns-config
         - --v=2
@@ -132,6 +133,7 @@ spec:
           mountPath: /kube-dns-config
       - name: dnsmasq
         #image: gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.5
+	#image: mirrorgooglecontainers/k8s-dns-dnsmasq-nanny-amd64:1.14.5
         image: nuaays/k8s-dns-dnsmasq-nanny-amd64:1.14.7
         livenessProbe:
           httpGet:
@@ -171,6 +173,7 @@ spec:
           mountPath: /etc/k8s/dns/dnsmasq-nanny
       - name: sidecar
         #image: gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.5
+	#image: mirrorgooglecontainers/k8s-dns-sidecar-amd64:1.14.5
         image: nuaays/k8s-dns-sidecar-amd64:1.14.7
         livenessProbe:
           httpGet:

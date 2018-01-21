@@ -1,0 +1,67 @@
+# 在deploy节点生成CA相关证书，以及kubedns.yaml配置文件
+- hosts: deploy
+  roles:
+  - deploy
+
+# 集群节点的公共配置任务
+- hosts:
+  - kube-cluster
+  - deploy
+  - etcd
+  - lb
+  roles:
+  - prepare
+
+# [可选]多master部署时的负载均衡配置
+# - hosts: lb
+#   roles:
+#   - lb
+
+# etcd cluster
+- hosts: etcd
+  roles:
+  - etcd
+
+# kubectl
+- hosts:
+  - kube-cluster
+  - deploy
+  roles:
+  - kubectl
+
+# docker
+- hosts: kube-cluster
+  gather_facts: True
+  roles:
+  - docker
+
+# docker images
+- hosts: kube-cluster
+  roles:
+  - kube-image
+
+# kube-master
+- hosts: kube-master
+  roles:
+  - kube-master
+
+# kube-node
+- hosts: kube-node
+  roles:
+  - kube-node
+
+# kube-dns
+- hosts: kube-master
+  roles:
+  - kube-dns
+
+# calico
+- hosts: kube-cluster
+  roles:
+  - calico
+
+# examples
+- hosts: kube-master
+  roles:
+  - examples
+

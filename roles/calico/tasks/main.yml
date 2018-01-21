@@ -2,7 +2,7 @@
   file: name={{ item }} state=directory
   with_items:
   - /etc/calico/ssl
-  - /root/local/kube-system/calico 
+  - /tmp 
 
 - name: 复制CA 证书到calico 证书目录
   copy: src={{ ca_dir }}/ca.pem dest=/etc/calico/ssl/ca.pem
@@ -18,14 +18,14 @@
         -profile=kubernetes calico-csr.json | {{ bin_dir }}/cfssljson -bare calico"
 
 - name: 准备 calico DaemonSet yaml文件
-  template: src=calico.yaml.j2 dest=/root/local/kube-system/calico/calico.yaml
+  template: src=calico.yaml.j2 dest=/tmp/calico.yaml
 
 - name: 准备 calico rbac文件 
-  template: src=calico-rbac.yaml.j2 dest=/root/local/kube-system/calico/calico-rbac.yaml
+  template: src=calico-rbac.yaml.j2 dest=/tmp/calico-rbac.yaml
 
 # 只需单节点执行一次，重复执行的报错可以忽略
 - name: 运行 calico网络
-  shell: "{{ bin_dir }}/kubectl create -f /root/local/kube-system/calico/ && sleep 15"
+  shell: "{{ bin_dir }}/kubectl create -f /tmp/ && sleep 15"
   when: NODE_ID is defined and NODE_ID == "node1"
   ignore_errors: true
 
@@ -40,12 +40,12 @@
 
 # [可选]cni calico plugins 已经在calico.yaml完成自动安装
 - name: 下载calicoctl 客户端
-  copy: src={{ base_dir }}/bin/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
+  copy: src={{ base_dir }}/bin/calico/v{{ calico_version }}/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
   with_items:
-  #- calico
-  #- calico-ipam
-  #- loopback
+  - calico
+  - calico-ipam
   - calicoctl
+
 
 - name: 准备 calicoctl配置文件
   template: src=calicoctl.cfg.j2 dest=/etc/calico/calicoctl.cfg

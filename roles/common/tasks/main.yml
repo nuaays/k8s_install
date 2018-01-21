@@ -1,0 +1,36 @@
+---
+
+- name: set timezone to shanghai
+  shell: sudo cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+- name: set /etc/profile
+  copy: src=etc_profile dest=/etc/profile
+
+- name: copy /etc/yum.repos.d/CentOS-Base.repo from aliyun mirror
+  copy: src=Centos-7.repo.aliyun dest=/etc/yum.repos.d/CentOS-Base.repo
+  # shell: sudo curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+
+# - name: copy /etc/yum.repos.d/CentOS-Base.repo from 163 mirror
+#   copy: src=Centos-7.repo.163 dest=/etc/yum.repos.d/CentOS-Base.repo
+#   # shell: sudo curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.163.com/.help/CentOS7-Base-163.repo
+
+#https://mirrors.ustc.edu.cn
+
+- name: install EPEL
+  # shell: rpm -Uvh http://mirrors.aliyun.com/epel/epel-release-latest-7.noarch.rpm
+  shell: rpm -Uvh https://mirrors.tuna.tsinghua.edu.cn/elrepo/extras/el7/x86_64/RPMS/elrepo-release-7.0-2.el7.elrepo.noarch.rpm
+
+- name: build yum cache
+  shell: yum clean all && yum makecache
+
+
+# - name: create user
+#   hosts: all
+#   user: root
+#   gather_facts: false
+#   vars:
+#     - user: "devops"
+#   tasks:
+#   - name: create  user  devops
+#     user: name="{{ user }}"
+#     #user: name="{{ user }}" state=absent remove=yes

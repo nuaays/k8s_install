@@ -3,6 +3,7 @@ Description=Kubernetes Scheduler
 Documentation=https://github.com/GoogleCloudPlatform/kubernetes
 
 [Service]
+#ExecStart={{ bin_dir }}/hyperkube scheduler \
 ExecStart={{ bin_dir }}/kube-scheduler \
   --address=127.0.0.1 \
   --master=http://127.0.0.1:8080 \

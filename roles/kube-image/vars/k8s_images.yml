@@ -1,0 +1,232 @@
+---
+# docker images for kubernetes
+# 
+# docker pull nuaays/node:v1.3.0;docker tag nuaays/node:v1.3.0 quay.io/calico/node:v1.3.0;
+# docker pull nuaays/cni:v1.9.1;docker tag nuaays/cni:v1.9.1 quay.io/calico/cni:v1.9.1;
+# docker pull nuaays/kube-policy-controller:v0.6.0;docker tag nuaays/kube-policy-controller:v0.6.0 quay.io/calico/kube-policy-controller:v0.6.0;
+# docker pull nuaays/kube-proxy-amd64:v1.9.0;docker tag nuaays/kube-proxy-amd64:v1.9.0 gcr.io/google_containers/kube-proxy-amd64:v1.9.0;
+# docker pull nuaays/kube-apiserver-amd64:v1.9.0;docker tag nuaays/kube-apiserver-amd64:v1.9.0 gcr.io/google_containers/kube-apiserver-amd64:v1.9.0;  
+# docker pull nuaays/kube-controller-manager-amd64:v1.9.0;docker tag nuaays/kube-controller-manager-amd64:v1.9.0 gcr.io/google_containers/kube-controller-manager-amd64:v1.9.0;
+# docker pull nuaays/kube-scheduler-amd64:v1.9.0;docker tag nuaays/kube-scheduler-amd64:v1.9.0 gcr.io/google_containers/kube-scheduler-amd64:v1.9.0;
+# docker pull nuaays/kubernetes-dashboard-amd64:v1.8.1;docker tag nuaays/kubernetes-dashboard-amd64:v1.8.1 gcr.io/google_containers/kubernetes-dashboard-amd64:v1.8.1;
+# docker pull nuaays/k8s-dns-sidecar-amd64:1.14.7;docker tag nuaays/k8s-dns-sidecar-amd64:1.14.7 gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.7;
+# docker pull nuaays/k8s-dns-kube-dns-amd64:1.14.7;docker tag nuaays/k8s-dns-kube-dns-amd64:1.14.7 gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.7;
+# docker pull nuaays/k8s-dns-dnsmasq-nanny-amd64:1.14.7;docker tag nuaays/k8s-dns-dnsmasq-nanny-amd64:1.14.7 gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.7;
+# docker pull nuaays/heapster-influxdb-amd64:v1.3.3;docker tag nuaays/heapster-influxdb-amd64:v1.3.3 gcr.io/google_containers/heapster-influxdb-amd64:v1.3.3;
+# docker pull nuaays/heapster-grafana-amd64:v4.4.3;docker tag nuaays/heapster-grafana-amd64:v4.4.3 gcr.io/google_containers/heapster-grafana-amd64:v4.4.3;
+# docker pull nuaays/heapster-amd64:v1.4.2;docker tag nuaays/heapster-amd64:v1.4.2 gcr.io/google_containers/heapster-amd64:v1.4.2;
+# docker pull nuaays/pause-amd64:3.0;docker tag nuaays/pause-amd64:3.0 gcr.io/google_containers/pause-amd64:3.0
+# 
+# 
+
+basic_images:
+    pause-amd64:
+        name: nuaays/pause-amd64:3.0
+        target: gcr.io/google_containers/pause-amd64:3.0
+        #gcr.io/google-containers/pause-amd64:3.0
+    kube-proxy-amd64:
+        name: nuaays/kube-proxy-amd64:v{{k8s_version}}
+        target: gcr.io/google_containers/kube-proxy-amd64:v{{k8s_version}}
+    etcd-amd64:
+        name: geerong/etcd-amd64:3.0.17
+        target: geerong gcr.io/google_containers/etcd-amd64:3.0.17
+    dashboard:
+        name: nuaays/kubernetes-dashboard-amd64:v1.6.3
+        target: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.6.3
+
+
+calico_images:
+    '3.0.1':
+        node:
+            name: "nuaays/node:v3.0.1" 
+            target: "quay.io/calico/node:v3.0.1" 
+        cni:
+            name: "nuaays/cni:v2.0.0" 
+            target: "quay.io/calico/cni:v2.0.0"
+        kube-policy-controller:
+            name: "nuaays/kube-policy-controller:v2.0.0" 
+            target: "quay.io/calico/kube-policy-controller:v2.0.0"
+    '2.6.6':
+        node:
+            name: "nuaays/node:v2.6.6" 
+            target: "quay.io/calico/node:v2.6.6" 
+        cni:
+            name: "nuaays/cni:v1.11.2" 
+            target: "quay.io/calico/cni:v1.11.2"
+        kube-policy-controller:
+            name: "nuaays/kube-policy-controller:v1.0.3" 
+            target: "quay.io/calico/kube-policy-controller:v1.0.3"
+        typha:
+            name: "nuaays/typha:v0.5.5" 
+            target: "quay.io/calico/typha:v0.5.5"
+    '2.6.5':
+        node:
+            name: "nuaays/node:v2.6.5" 
+            target: "quay.io/calico/node:v2.6.5" 
+        cni:
+            name: "nuaays/cni:v1.11.2" 
+            target: "quay.io/calico/cni:v1.11.2"
+        kube-policy-controller:
+            name: "nuaays/kube-policy-controller:v1.0.2" 
+            target: "quay.io/calico/kube-policy-controller:v1.0.2"
+    '1.3.0':
+        node:
+            name: "nuaays/node:v1.3.0" 
+            target: "quay.io/calico/node:v1.3.0" 
+        cni:
+            name: "nuaays/cni:v1.9.1" 
+            target: "quay.io/calico/cni:v1.9.1"
+        kube-policy-controller:
+            name: "nuaays/kube-policy-controller:v0.6.0" 
+            target: "quay.io/calico/kube-policy-controller:v0.6.0"
+            # name: "geerong/kube-policy-controller:v0.7.0" 
+            # target: "quay.io/calico/kube-policy-controller:v0.7.0"
+
+# dns_images:
+#     k8s-dns-kube-dns-amd64:
+#         name: nuaays/k8s-dns-kube-dns-amd64:{{k8s_dns_version}}
+#         target: gcr.io/google_containers/k8s-dns-kube-dns-amd64:{{k8s_dns_version}}
+#     k8s-dns-dnsmasq-nanny-amd64:
+#         name: nuaays/k8s-dns-dnsmasq-nanny-amd64:{{k8s_dns_version}}
+#         target: gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:{{k8s_dns_version}}
+#     k8s-dns-sidecar-amd64:
+#         name: nuaays/k8s-dns-sidecar-amd64:{{k8s_dns_version}}
+#         target: gcr.io/google_containers/k8s-dns-sidecar-amd64:{{k8s_dns_version}}
+
+dns_images:
+    '1.14.8':
+        k8s-dns-kube-dns-amd64:
+            name: nuaays/k8s-dns-kube-dns-amd64:1.14.8
+            target: gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.8
+        k8s-dns-dnsmasq-nanny-amd64:
+            name: nuaays/k8s-dns-dnsmasq-nanny-amd64:1.14.8
+            target: gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.8
+        k8s-dns-sidecar-amd64:
+            name: nuaays/k8s-dns-sidecar-amd64:1.14.8
+            target: gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.8
+    '1.14.7':
+        k8s-dns-kube-dns-amd64:
+            name: nuaays/k8s-dns-kube-dns-amd64:1.14.7
+            target: gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.7
+        k8s-dns-dnsmasq-nanny-amd64:
+            name: nuaays/k8s-dns-dnsmasq-nanny-amd64:1.14.7
+            target: gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.7
+        k8s-dns-sidecar-amd64:
+            name: nuaays/k8s-dns-sidecar-amd64:1.14.7
+            target: gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.7
+    '1.14.5':
+        k8s-dns-kube-dns-amd64:
+            name: nuaays/k8s-dns-kube-dns-amd64:1.14.5
+            target: gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.5
+        k8s-dns-dnsmasq-nanny-amd64:
+            name: nuaays/k8s-dns-dnsmasq-nanny-amd64:1.14.5
+            target: gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.5
+        k8s-dns-sidecar-amd64:
+            name: nuaays/k8s-dns-sidecar-amd64:1.14.5
+            target: gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.5
+    '1.14.4':
+        k8s-dns-kube-dns-amd64:
+            name: geerong/k8s-dns-kube-dns-amd64:1.14.4
+            target: gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.4
+        k8s-dns-dnsmasq-nanny-amd64:
+            name: geerong/k8s-dns-dnsmasq-nanny-amd64:1.14.4
+            target: gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.4
+        k8s-dns-sidecar-amd64:
+            name: geerong/k8s-dns-sidecar-amd64:1.14.4
+            target: gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.4
+
+
+k8s_images:
+    '1.9.0':            
+        kube-proxy-amd64:
+            name: nuaays/kube-proxy-amd64:v{{k8s_version}}
+            target: gcr.io/google_containers/kube-proxy-amd64:v{{k8s_version}}
+        kube-apiserver-amd64:
+            name: nuaays/kube-apiserver-amd64:v{{k8s_version}}
+            target: gcr.io/google_containers/kube-apiserver-amd64:v{{k8s_version}}
+        kube-controller-manager-amd64:
+            name: nuaays/kube-controller-manager-amd64:v{{k8s_version}}
+            target: gcr.io/google_containers/kube-controller-manager-amd64:v{{k8s_version}}
+        kube-scheduler-amd64:
+            name: nuaays/kube-scheduler-amd64:v{{k8s_version}}
+            target: gcr.io/google_containers/kube-scheduler-amd64:v{{k8s_version}}
+        kubernetes-dashboard-amd64:
+            name: nuaays/kubernetes-dashboard-amd64:v1.8.1
+            target: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.8.1
+        k8s-dns-sidecar-amd64:
+            name: nuaays/k8s-dns-sidecar-amd64:1.14.7
+            target: gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.7
+        k8s-dns-kube-dns-amd64:
+            name: nuaays/k8s-dns-kube-dns-amd64:1.14.7
+            target: gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.7
+        k8s-dns-dnsmasq-nanny-amd64:
+            name: nuaays/k8s-dns-dnsmasq-nanny-amd64:1.14.7
+            target: gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.7
+        heapster-amd6:
+            name: nuaays/heapster-amd64:v1.4.2
+            target: gcr.io/google_containers/heapster-amd64:v1.4.2
+        heapster-influxdb-amd64:
+            name: nuaays/heapster-influxdb-amd64:v1.3.3
+            target: gcr.io/google_containers/heapster-influxdb-amd64:v1.3.3
+        heapster-grafana-amd64:
+            name: nuaays/heapster-grafana-amd64:v4.4.3
+            target: gcr.io/google_containers/heapster-grafana-amd64:v4.4.3
+    '1.8.4':
+        kube-proxy-amd64:
+            name: nuaays/kube-proxy-amd64:v{{k8s_version}}
+            target: gcr.io/google_containers/kube-proxy-amd64:v{{k8s_version}}
+        kube-apiserver-amd64:
+            name: nuaays/kube-apiserver-amd64:v{{k8s_version}}
+            target: gcr.io/google_containers/kube-apiserver-amd64:v{{k8s_version}}
+        kube-controller-manager-amd64:
+            name: nuaays/kube-controller-manager-amd64:v{{k8s_version}}
+            target: gcr.io/google_containers/kube-controller-manager-amd64:v{{k8s_version}}
+        kube-scheduler-amd64:
+            name: nuaays/kube-scheduler-amd64:v{{k8s_version}}
+            target: gcr.io/google_containers/kube-scheduler-amd64:v{{k8s_version}}
+    '1.7.6':
+        kube-proxy-amd64:
+            name: nuaays/kube-proxy-amd64:v{{k8s_version}}
+            target: gcr.io/google_containers/kube-proxy-amd64:v{{k8s_version}}
+        kube-apiserver-amd64:
+            name: nuaays/kube-apiserver-amd64:v{{k8s_version}}
+            target: gcr.io/google_containers/kube-apiserver-amd64:v{{k8s_version}}
+        kube-controller-manager-amd64:
+            name: nuaays/kube-controller-manager-amd64:v{{k8s_version}}
+            target: gcr.io/google_containers/kube-controller-manager-amd64:v{{k8s_version}}
+        kube-scheduler-amd64:
+            name: nuaays/kube-scheduler-amd64:v{{k8s_version}}
+            target: gcr.io/google_containers/kube-scheduler-amd64:v{{k8s_version}}
+    '1.7.2':
+        pause-amd64:
+            name: nuaays/pause-amd64:3.0
+            target: gcr.io/google_containers/pause-amd64:3.0
+        kube-proxy-amd64:
+            name: nuaays/kube-proxy-amd64:v{{k8s_version}}
+            target: gcr.io/google_containers/kube-proxy-amd64:v{{k8s_version}}
+        kube-apiserver-amd64:
+            name: nuaays/kube-apiserver-amd64:v{{k8s_version}}
+            target: gcr.io/google_containers/kube-apiserver-amd64:v{{k8s_version}}
+        kube-controller-manager-amd64:
+            name: nuaays/kube-controller-manager-amd64:v{{k8s_version}}
+            target: gcr.io/google_containers/kube-controller-manager-amd64:v{{k8s_version}}
+        kube-scheduler-amd64:
+            name: nuaays/kube-scheduler-amd64:v{{k8s_version}}
+            target: gcr.io/google_containers/kube-scheduler-amd64:v{{k8s_version}}
+        etcd-amd64:
+            name: nuaays/kube-scheduler-amd64:v{{k8s_version}}
+            target: gcr.io/google_containers/etcd-amd64:3.0.17
+        k8s-dns-dnsmasq-nanny-amd64:
+            name: nuaays/kube-scheduler-amd64:v{{k8s_version}}
+            target: gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.4
+        k8s-dns-kube-dns-amd64:
+            name: nuaays/kube-scheduler-amd64:v{{k8s_version}}
+            target: gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.4
+        k8s-dns-sidecar-amd64:
+            name: nuaays/kube-scheduler-amd64:v{{k8s_version}}
+            target: gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.4  
+
+     
+
+
+

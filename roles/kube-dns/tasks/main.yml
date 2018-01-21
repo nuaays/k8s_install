@@ -14,3 +14,14 @@
   when: NODE_ID is defined and NODE_ID == "node1"
   ignore_errors: true
 
+- name: check dns
+  shell: "sudo {{ bin_dir }}/kubectl get pods --namespace=kube-system -l k8s-app=kube-dns"
+  when: NODE_ID is defined and NODE_ID == "node1"
+  ignore_errors: true
+
+
+
+##
+#kubectl exec -n kube-system -ti kube-dns-v20-xxxxx -c healthz -- nslookup kube-dns.kube-system.svc.cluster.local
+#kubectl exec -n kube-system -ti kube-dns-v20-xxxxx -c healthz -- nslookup kube-dns
+#kubectl exec -n kube-system -ti kube-dns-v20-xxxxx -c healthz cat /etc/resolv.conf

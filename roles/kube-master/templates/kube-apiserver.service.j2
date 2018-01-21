@@ -4,10 +4,12 @@ Documentation=https://github.com/GoogleCloudPlatform/kubernetes
 After=network.target
 
 [Service]
+#ExecStart={{ bin_dir }}/hyperkube apiserver \
 ExecStart={{ bin_dir }}/kube-apiserver \
   --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,ResourceQuota,NodeRestriction \
   --bind-address={{ NODE_IP }} \
   --insecure-bind-address=127.0.0.1 \
+  --insecure-port=8080 \
   --authorization-mode=Node,RBAC \
   --kubelet-https=true \
   --anonymous-auth=false \

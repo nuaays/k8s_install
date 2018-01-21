@@ -31,6 +31,7 @@ kube-master
 #192.168.1.xx NODE_ID=node6 NODE_IP="192.168.1.xx"
 
 [all:vars]
+ansible_user=vagrant
 ansible_ssh_port=22
 ansible_ssh_user=vagrant
 ansible_ssh_pass=vagrant
@@ -43,6 +44,17 @@ ansible_connection=paramiko
 
 
 # ---------集群主要参数---------------
+k8s_version="1.9.2"
+
+k8s_dns_version="1.14.7"
+#"1.14.5"
+
+docker_version="18.01.0-ce"
+
+calico_version="3.0.1"
+cni_version="0.6.0"
+etcd_version="3.2.13"
+
 #集群 MASTER IP
 MASTER_IP="192.168.56.101"
 
@@ -54,7 +66,8 @@ POD_INFRA_CONTAINER_IMAGE=nuaays/pause-amd64:3.0
 #mirrorgooglecontainers/pause-amd64:3.0
 
 #TLS Bootstrapping 使用的 Token，使用 head -c 16 /dev/urandom | od -An -t x | tr -d ' ' 生成
-BOOTSTRAP_TOKEN="d18f94b5fa585c7123f56803d925d2e7"
+BOOTSTRAP_TOKEN="6d40907bfe7c800aad84cf3dcc221f1a"
+#"d18f94b5fa585c7123f56803d925d2e7"
 
 # 集群网络插件，目前支持calico和flannel
 CLUSTER_NETWORK="calico"
@@ -97,6 +110,7 @@ ETCD_ENDPOINTS="https://192.168.56.101:2379,https://192.168.56.102:2379,https://
 BASIC_AUTH_USER="admin"
 BASIC_AUTH_PASS="admin1234"
 
+
 # ---------附加参数--------------------
 #默认二进制文件目录
 bin_dir="/usr/local/bin"
@@ -105,7 +119,7 @@ bin_dir="/usr/local/bin"
 ca_dir="/etc/kubernetes/ssl"
 
 #部署目录，即 ansible 工作目录
-base_dir="/root/kubeasz"
+base_dir="/root/k8s_install"
 
 #私有仓库 harbor服务器 (域名或者IP)
 #HARBOR_IP="192.168.1.8"

@@ -111,7 +111,7 @@ spec:
           initialDelaySeconds: 3
           timeoutSeconds: 5
         args:
-        - --domain={{ CLUSTER_DNS_DOMAIN }}
+        - --domain={{ CLUSTER_DNS_DOMAIN }}.
         - --dns-port=10053
         - --config-dir=/kube-dns-config
         - --v=2
@@ -198,5 +198,6 @@ spec:
             memory: 20Mi
             cpu: 10m
       dnsPolicy: Default  # Don't use cluster DNS.
+      restartPolicy: Always
       serviceAccount: kube-dns
       serviceAccountName: kube-dns

@@ -6,7 +6,7 @@
   - "{{ base_dir }}/roles/prepare/files/"
 
 - name: 下载证书工具 CFSSL
-  copy: src={{ base_dir }}/bin/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
+  copy: src={{ base_dir }}/bin/cfssl/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
   with_items:
   - cfssl
   - cfssl-certinfo

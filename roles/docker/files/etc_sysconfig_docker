@@ -1,0 +1,2 @@
+OPTIONS=' -H unix:///var/run/docker.sock -H tcp://0.0.0.0:2375 --signature-verification=false --storage-driver=overlay --exec-opt native.cgroupdriver=cgroupfs --graph=/localdisk/docker/graph  --log-driver=json-file --log-opt max-size=100m --selinux-enabled=false --insecure-registry=senyang.com:5000 --insecure-registry=registry.cn-hangzhou.aliyuncs.com --insecure-registry=gcr.io --insecure-registry=daocloud.io --registry-mirror=http://f631e5c5.m.daocloud.io --registry-mirror=https://olzwzeg2.mirror.aliyuncs.com --registry-mirror=https://ip2y4bft.mirror.aliyuncs.com'
+

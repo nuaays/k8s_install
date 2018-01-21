@@ -1,0 +1,30 @@
+---
+
+- name: copy /etc/yum.repos.d/kubernetes.repo
+  copy: src=kubernetes.repo.aliyun dest=/etc/yum.repos.d/kubernetes.repo
+
+- name: check kubernetes
+  shell: sudo yum list kubeadm –showduplicates && sudo yum list kubernetes-cni –showduplicates && sudo yum list kubelet –showduplicates && sudo yum list kubectl –showduplicates
+
+# - name: install kubernetes 1.7.5
+#   shell: export K8SVERSION=1.7.5 &&sudo yum install -y "kubectl-${K8SVERSION}-0.x86_64" "kubelet-${K8SVERSION}-0.x86_64" "kubeadm-${K8SVERSION}-0.x86_64"
+
+- name: install dependency packages
+  yum: name={{ item }} state=present
+  with_items:
+    - unzip
+    - wget 
+    - curl
+    - http://mirrors.aliyun.com/epel/7/x86_64/Packages/h/htop-2.0.2-1.el7.x86_64.rpm
+    - ntp
+    - policycoreutils-python
+    - screen
+    - sshpass
+    - iperf
+    - git
+    - etcd
+    - socat
+    - flannel
+    - net-tools.x86_64
+    - bridge-utils.x86_64
+    - ebtables

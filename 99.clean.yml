@@ -44,7 +44,7 @@
   - deploy
   tasks:
   - name: stop docker service
-    shell: "systemctl stop docker"
+    shell: "sudo systemctl stop docker"
     ignore_errors: true
 
   # 因为calico-kube-controller使用了host网络，相当于使用了docker -net=host，需要
