@@ -2,6 +2,14 @@
 [deploy]
 192.168.56.104
 
+# 如果启用harbor，请配置后面harbor相关参数
+[harbor]
+#192.168.1.8 NODE_IP="192.168.1.8"
+
+# 预留组，后续添加node节点使用
+[new-node]
+#192.168.1.xx NODE_ID=node6 NODE_IP="192.168.1.xx"
+
 # etcd集群请提供如下NODE_NAME、NODE_IP变量
 # 请注意etcd集群必须是1,3,5,7...奇数个节点
 [etcd]
@@ -22,14 +30,6 @@
 kube-node
 kube-master
 
-# 如果启用harbor，请配置后面harbor相关参数
-[harbor]
-#192.168.1.8 NODE_IP="192.168.1.8"
-
-# 预留组，后续添加node节点使用
-[new-node]
-#192.168.1.xx NODE_ID=node6 NODE_IP="192.168.1.xx"
-
 [all:vars]
 ansible_user=vagrant
 ansible_ssh_port=22
@@ -41,6 +41,18 @@ ansible_su_pass=vagrant
 ansible_ssh_sudo_pass=vagrant
 ansible_become=true
 ansible_connection=paramiko
+
+#集群 MASTER IP
+MASTER_IP="192.168.56.101"
+
+#集群 APISERVER
+KUBE_APISERVER="https://192.168.56.101:6443"
+
+# etcd 集群间通信的IP和端口, **根据实际 etcd 集群成员设置**
+ETCD_NODES="etcd1=https://192.168.56.101:2380,etcd2=https://192.168.56.102:2380,etcd3=https://192.168.56.103:2380"
+
+# etcd 集群服务地址列表, **根据实际 etcd 集群成员设置**
+ETCD_ENDPOINTS="https://192.168.56.101:2379,https://192.168.56.102:2379,https://192.168.56.103:2379"
 
 
 # ---------集群主要参数---------------
@@ -55,11 +67,6 @@ calico_version="3.0.1"
 cni_version="0.6.0"
 etcd_version="3.2.13"
 
-#集群 MASTER IP
-MASTER_IP="192.168.56.101"
-
-#集群 APISERVER
-KUBE_APISERVER="https://192.168.56.101:6443"
 
 #pause镜像地址
 POD_INFRA_CONTAINER_IMAGE=nuaays/pause-amd64:3.0
@@ -98,12 +105,6 @@ CLUSTER_DNS_SVC_IP="10.68.0.2"
 
 # 集群 DNS 域名
 CLUSTER_DNS_DOMAIN="cluster.local"
-
-# etcd 集群间通信的IP和端口, **根据实际 etcd 集群成员设置**
-ETCD_NODES="etcd1=https://192.168.56.101:2380,etcd2=https://192.168.56.102:2380,etcd3=https://192.168.56.103:2380"
-
-# etcd 集群服务地址列表, **根据实际 etcd 集群成员设置**
-ETCD_ENDPOINTS="https://192.168.56.101:2379,https://192.168.56.102:2379,https://192.168.56.103:2379"
 
 
 # 集群basic auth 使用的用户名和密码
